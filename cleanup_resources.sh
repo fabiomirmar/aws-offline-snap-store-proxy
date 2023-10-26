@@ -7,6 +7,9 @@ source output.sh
 source config.sh
 
 # Remove certificates and bucket
+
+ssh_flags=" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null "
+
 ssh $ssh_flags -i $ssh_key $snapproxy_public_ip \
         'aws s3 rm s3://snap-cli-cert --recursive'
 ssh $ssh_flags -i $ssh_key $snapproxy_public_ip \

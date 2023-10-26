@@ -48,6 +48,8 @@ ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
 
 # Due to a bug using snap-store proxy on AWS instances, need to use snap-proxy from latest/edge/fix-sn2164 for now
 ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
+	'sudo snap install snap-store-proxy'
+ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
 	'sudo snap-store-proxy fetch-snaps snap-store-proxy --channel=latest/edge/fix-sn2164'
 ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
 	'cp /var/snap/snap-store-proxy/common/downloads/snap-store-proxy-* /home/ubuntu'

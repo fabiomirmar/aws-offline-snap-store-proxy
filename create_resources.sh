@@ -112,6 +112,8 @@ aws iam wait instance-profile-exists --instance-profile-name snap-client --regio
 aws iam add-role-to-instance-profile --role-name S3-Role-RO --instance-profile-name snap-client
 
 # Associate profiles to the instances
+aws iam wait instance-profile-exists --instance-profile-name snap-proxy --region=sa-east-1
+aws iam wait instance-profile-exists --instance-profile-name snap-client --region=sa-east-1
 aws ec2  associate-iam-instance-profile --iam-instance-profile Name=snap-proxy --instance-id $snapproxyreg_instance --region $region
 aws ec2  associate-iam-instance-profile --iam-instance-profile Name=snap-proxy --instance-id $snapproxy_instance --region $region
 aws ec2  associate-iam-instance-profile --iam-instance-profile Name=snap-client --instance-id $snapcli_instance --region $region
