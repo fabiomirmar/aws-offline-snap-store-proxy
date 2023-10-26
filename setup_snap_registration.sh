@@ -46,6 +46,12 @@ ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
 ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
 	"STORE_ADMIN_TOKEN=$STORE_ADMIN_TOKEN store-admin register --offline https://snaps.canonical.internal"
 
+# Due to a bug using snap-store proxy on AWS instances, need to use snap-proxy from latest/edge/fix-sn2164 for now
+ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
+	'sudo snap-store-proxy fetch-snaps snap-store-proxy --channel=latest/edge/fix-sn2164'
+ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
+	'cp /var/snap/snap-store-proxy/common/downloads/snap-store-proxy-* /home/ubuntu'
+
 # Export desired snaps to be side loaded
 ssh $ssh_flags -i $ssh_key $snapproxyreg_public_ip \
 	'store-admin export snaps jq htop aws-cli core core22 core18 core20 snapd --channel=stable --arch=amd64 --export-dir .'

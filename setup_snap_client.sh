@@ -58,4 +58,4 @@ ssh $ssh_flags -i $ssh_key $snapclient_public_ip \
 ssh $ssh_flags -i $ssh_key $snapclient_public_ip \
 	"sudo snap set core proxy.store=$store_id"
 ssh $ssh_flags -i $ssh_key $snapclient_public_ip \
-	'sudo snap info aws-cli'
+	'sudo snap install aws-cli --classic'

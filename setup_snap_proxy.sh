@@ -128,7 +128,11 @@ ssh $ssh_flags -i $ssh_key $snapproxy_public_ip \
 ssh $ssh_flags -i $ssh_key $snapproxy_public_ip \
 	'sudo aws s3 cp s3://snap-store-files/ /var/snap/snap-store-proxy/common/snaps-to-push/ --recursive --exclude "offline-snap-store.tar.gz"'
 ssh $ssh_flags -i $ssh_key $snapproxy_public_ip \
-	'for snap in `ls /var/snap/snap-store-proxy/common/snaps-to-push/`; do sudo snap-store-proxy push-snap /var/snap/snap-store-proxy/common/snaps-to-push/$snap; done'
+	'for snap in `ls /var/snap/snap-store-proxy/common/snaps-to-push/`; do sudo snap-store-proxy push-snap /var/snap/snap-store-proxy/common/snaps-to-push/$snap --push-channel-map; done'
+
+# Due to a bug using snap-store proxy on AWS instances, need to use snap-proxy from latest/edge/fix-sn2164 for now
+ssh $ssh_flags -i $ssh_key $snapproxy_public_ip \
+	'sudo snap refresh snap-store-proxy --channel=latest/edge/fix-sn2164'
 
 store_id=$(ssh $ssh_flags -i $ssh_key $snapproxy_public_ip "snap-proxy status | grep 'Store ID'")
 echo "store_id=$(echo $store_id | awk '{print $3}')" | tee -a output.sh
